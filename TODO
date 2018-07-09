@@ -1,0 +1,6 @@
+Store information about current user for all changes to the system (who gave a studypoint)
+
+Remove: useFronter: false
+
+Tjek Time on Token. Seems to be 1970
+

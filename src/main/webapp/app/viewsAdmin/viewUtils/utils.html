@@ -1,0 +1,85 @@
+<style>
+  .result {
+    width: 16em;
+    padding: 0.3em;
+    background: lightyellow;
+  }
+</style>
+
+<div style="margin:3em;">
+  <h2>Get Details from a class Name (for full-time educations)</h2>
+  <br/>
+  <a href="https://www.cphbusiness.dk/intra/nyheder/2015/01/ny-faelles-nomenklatur-nye-holdkoder/" target="_blank">See Nomenclature here</a>
+  <br/>
+  <br/>
+  <div class="form-group"> 
+
+
+    <div class="form-horizontal">
+
+      <div class="form-group">
+        <div class="col-sm-4"> <input type="text" style="width: 14em;" ng-model="classToDecode" class="form-control" placeholder="Type Class Name here">
+        </div>
+        <div class="col-sm-2">
+          <button class="btn btn-default" ng-click="decode()">Decode</button>
+        </div>
+        
+      </div>
+      <div>
+          <span>You can test with this demo-string: <b>h15lab6q13f</b></span>
+        </div>
+      <hr/>
+      <h3>Decoded class:</h3>
+      <div style="margin-left: 0em;width:30em;border-radius: 5px; border: lightgray solid 1px;padding: 1em;font-size: inherit;color: gray;-webkit-box-shadow: 10px 10px 5px 0px rgba(77,74,77,1);
+           -moz-box-shadow: 10px 10px 5px 0px rgba(77,74,77,1);
+           box-shadow: 10px 10px 5px 0px rgba(77,74,77,1);">
+        
+      <div class="form-group">
+        <div class="col-sm-4">Location:</div>
+        <div class="col-sm-8">
+          <div class="result">{{location}}&nbsp;</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-4">Year for the class</div>
+        <div class="col-sm-8">
+          <div class="result">{{year}}&nbsp;</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-4">Education:</div>
+        <div class="col-sm-8">
+          <div class="result">{{education}}&nbsp;</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-4">Semester:</div>
+        <div class="col-sm-8 ">
+          <div class="result">{{semester}}&nbsp;</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-4">Summer/Winter:</div>
+        <div class="col-sm-8">
+          <div class="result"> {{sumWin}}&nbsp;</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-4">Started:</div>
+        <div class="col-sm-8">
+          <div class="result">{{started}}&nbsp;</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-4">Runs in:</div>
+        <div class="col-sm-8">
+          <div class="result">{{runsIn}} &nbsp;</div>
+        </div>
+      </div>
+        <hr/>
+        <div style="color:darkred">{{warning}}</div>
+    </div>
+
+  </div>
+</div>
+

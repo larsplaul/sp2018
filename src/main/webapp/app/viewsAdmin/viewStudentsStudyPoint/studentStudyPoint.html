@@ -1,0 +1,76 @@
+
+<style>
+  input.ng-invalid {
+    background: red;
+  }
+</style>
+<div class="alert alert-danger" role="alert" ng-show="error">{{error}}</div>
+<div style="">
+  <h3>{{name}}</h3>
+  <div ng-if="!oneClassOnly">
+    <div style="max-width: 25em;">
+      <select ng-model="selectedClassId"
+              ng-options="class._id as class.nameShort + ' (' + class._id+')' for class in classes"
+              ng-change="getClass(selectedClassId)" id="class" class="form-control">
+        <option value='' disabled selected style='display:none;'>Select class</option>
+      </select>
+    </div>
+  </div>
+  <div ng-if="oneClassOnly">
+    <div style="max-width: 25em;">
+      <h4>Class: {{selectedClassId}}</h4>
+    </div>
+  </div>
+
+  <div style="clear: both;">&nbsp;</div>
+
+  <div style="float: left">
+    <button ng-repeat="period in allPeriods" style="min-width: 10em;" type="button" class="btn btn-default btn-sm"
+            ng-click="showPeriod(period.periodName)">
+      {{period.periodName}}
+    </button>
+  </div>
+
+  <div style="clear:both">&nbsp;</div>
+  
+  <div collapse="!period">
+    <h3>{{period.periodName}} ({{period.periodDescription}})</h3>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="table" style="font-size: smaller;">
+          <form name="studyPointFormForUser">
+            <table class="table table-striped table-condensed" style="font-size: smaller">
+              <thead>
+                <tr>
+                  <th>Task</th>
+                  <th>Score</th>
+                  <th style="color:gray;">Max</th>
+                </tr>
+              </thead>
+              <tr ng-repeat="task in period.tasks">
+                <td>{{task.name}}</td>
+                <td><input type="number" ng-model="task.score" min="0" max="{{task.maxScore}}"></td>
+                <td style="color:gray">{{task.maxScore}}</td>
+              </tr>
+
+            </table>
+          </form>
+          <button ng-click="savePeriod()" ng-disabled="studyPointFormForUser.$invalid || studyPointFormForUser.$pristine" ng-show="period" class="btn btn-success"
+                  style="margin-top: 0.5em;">Save
+          </button>
+          <span style="max-width:  1em;margin-left: 2em;" class="alert alert-danger alert-block" role="alert" ng-show="studyPointFormForUser.$invalid"  ng-cloak >
+            Correct invalid fields before saving
+          </span>
+        </div>
+      </div>
+      <div class="col-md-7">
+        <study-point-details></study-point-details>
+      </div>
+
+    </div>
+  </div>
+  <div style="max-width: 25em;margin-top: 2em;"  class="alert alert-success alert-block" role="alert" ng-show="safeStatus"  ng-cloak >
+    {{safeStatus}}
+  </div>
+</div>
+

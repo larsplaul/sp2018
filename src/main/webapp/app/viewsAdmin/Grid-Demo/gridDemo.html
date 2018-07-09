@@ -1,0 +1,43 @@
+
+<div class="alert alert-danger" role="alert" ng-show="error" style="margin: 1em;">{{error}}</div>
+
+<script type="text/ng-template" id="warningDirtyForm.html">
+  <div class="modal-header">
+    <h3 class="modal-title">Unsaved changes on current period!</h3>
+  </div>
+  <div class="modal-body" style="height: 10em;">
+    There are unsaved changes on the current period.
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" ng-click="cancel()">Cancel</button>
+    <button class="btn btn-warning" ng-click="continueAndDrop()">Drop Changes and Continue</button>
+  </div>
+</script>
+
+
+<div class="form-group" style="margin-top: 2em;">
+  <label for="class" class="control-label col-md-2" style="font-size: large"><span class="label label-primary">Select Class</span></label>
+
+  <div class="col-md-6">
+    <select ng-model="selectedId" ng-options="class._id as class.nameShort + ' (' + class._id+')' for class in classes"
+            ng-change="getClass(selectedId)" id="class" class="form-control"> </select>
+  </div>
+
+</div>
+<div style="clear:both">&nbsp;</div>
+
+<div ng-repeat="period in selectedClass.periods" style="float: left">
+  <button class="btn btn-primary" style="min-width: 12em;margin-right: 0.5em;" ng-click="showPeriod(period._id)"
+          ng-class="">
+    {{period.periodName}}
+  </button>
+</div>
+<div style="clear:both">&nbsp;</div>
+
+<div>
+  <div ui-grid="gridOptions"  ui-grid-pinning ui-grid-edit ui-grid-cellnav style="width: 100%;"></div>
+</div>
+
+
+
+

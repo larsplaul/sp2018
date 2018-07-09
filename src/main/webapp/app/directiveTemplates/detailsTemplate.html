@@ -1,0 +1,21 @@
+<div style="border-radius: 5px; border: lightgray solid 1px;padding: 1em;font-size: inherit;color: gray;-webkit-box-shadow: 10px 10px 5px 0px rgba(77,74,77,1);
+-moz-box-shadow: 10px 10px 5px 0px rgba(77,74,77,1);
+box-shadow: 10px 10px 5px 0px rgba(77,74,77,1);">
+   <p>Available points for this Semester: <b>{{maxPointForSemester}}</b></p>
+
+  <p>Required for this semester: <b>{{requiredPointsPercentage}}% ({{requiredPoints}}) points</b></p>
+
+  <p>Available points for this Period: <b>{{period | maxPointForPeriod}}</b></p>
+
+  <p>Points total for this Period: <b>{{period.tasks | sumForPeriod}}</b></p>
+
+  <p>Points total for this Semester: <b>{{allPeriods | sumForSemester}}</b></p>
+  <hr/>
+  <p>Points total for this Semester (%)</p>
+
+  <progressbar style="margin: 0px;" type="{{type}}" max="max"
+               value="((allPeriods | sumForSemester)*100/maxPointForSemester)|roundDown">{{(((allPeriods |
+    sumForSemester)*100)/maxPointForSemester)|roundDown}}%
+  </progressbar>
+  <progressbar style="margin: 0px;margin-top:1px; height: 5px;" ng-style="{'width':reqPointsPercentageString}" value="100" max="100"></progressbar>
+</div>

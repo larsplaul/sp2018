@@ -1,0 +1,10 @@
+_AssignPoints_
+
+CPH-l17dat3qf ; Period-1
+
+_SKIPFIRST_
+
+# When _SKIPFIRST_ is set, an additional entry can be added before studentId for entries below (typically users real name)
+
+Jan;  a;SP_EX-1;5;SP_EX-2;6
+Peter; b;SP_EX-1;3;SP_EX-2;1

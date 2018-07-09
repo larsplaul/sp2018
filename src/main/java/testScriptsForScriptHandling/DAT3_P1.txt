@@ -1,0 +1,22 @@
+_PeriodInfo_
+CPH-l17dat3qf;Period-1;Net, threads and Sockets
+
+_Tasks_
+_A_ 30-01;1
+_A_ 31-01;1
+_A_ 01-02;1
+_A_ 02-02;1
+SP_EX-1;6
+
+_A_ 06-02;1
+_A_ 07-02;1
+_A_ 08-02;1
+_A_ 09-02;1
+SP_EX-2;6
+
+13-02;1
+CA1-A;5
+CA1-B;5
+CA1-C;4
+CA1-D;5
+BONUS;20

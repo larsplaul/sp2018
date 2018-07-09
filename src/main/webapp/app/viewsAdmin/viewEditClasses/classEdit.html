@@ -1,0 +1,51 @@
+<div class="alert alert-danger" role="alert" ng-show="error">{{error}}</div>
+<div style="padding: 1em;">
+  <h3>{{name}}</h3>
+
+  <div>
+    <div style="width: 35%">
+      <select ng-model="selectedId"
+              ng-options="class._id as class.nameShort + ' (' + class._id+')' for class in classes"
+              ng-change="getClass(selectedId)" id="class" class="form-control">
+        <option value='' disabled selected style='display:none;'>Select class</option>
+      </select>
+    </div>
+  </div>
+ 
+  <div style="clear: both;">&nbsp;</div>
+  <div class="row" collapse="!selectedClass">
+      <div>
+           <p style="font-style: italic; color: #265a88">Note: To preserve history, studypoints attached to users will not be removed, when removing users from the clas</p>
+  <p style="font-style: italic; color: #265a88">Use a plain SQL statement agains the DB, to see these historical data (or reinsert the user into the class)</p>
+      </div>
+    <div class="col-md-5"  style="max-height: 50vh; overflow: auto;border-radius: 5px; border: lightgray solid 1px;padding: 1em;font-size: inherit;color: gray;-webkit-box-shadow: 10px 10px 5px 0px rgba(77,74,77,1);
+-moz-box-shadow: 10px 10px 5px 0px rgba(77,74,77,1);
+box-shadow: 10px 10px 5px 0px rgba(77,74,77,1);"> <!-vh Vertical Height -->
+      <table class="table">
+        <thead>
+        <th>Name</th>
+        <th><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></th>
+
+        </thead>
+        <tbody>
+        <tr ng-repeat="student in selectedClass.students">
+          <td>{{student.firstName}} {{student.lastName}}</td>
+          <td><input type="checkbox" ng-model="student.delete"></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-md-5">
+      <div style="margin-left: 1em;border-radius: 5px; border: lightgray solid 1px;padding: 1em;font-size: inherit;color: gray;-webkit-box-shadow: 10px 10px 5px 0px rgba(77,74,77,1);
+-moz-box-shadow: 10px 10px 5px 0px rgba(77,74,77,1);
+box-shadow: 10px 10px 5px 0px rgba(77,74,77,1);">
+        <p><label>Name Short:</label><br/><input type="text" ng-model="selectedClass.nameShort"></p>
+        <p><label>Available points for this Semester:</label><br/><input type="text" ng-model="selectedClass.maxPointForSemester"></p>
+        <p><label>Required points for this semester (%):</label><br/><input type="text" ng-model="selectedClass.requiredPoints"></p>
+      </div>
+      <button ng-click="saveEditedClass()"  class="btn btn-success"
+              style="margin-top: 2em;margin-left:1em;">Save Changes
+      </button>
+    </div>
+  </div>
+</div>

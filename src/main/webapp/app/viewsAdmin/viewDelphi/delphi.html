@@ -1,0 +1,185 @@
+<style>
+
+  .err {
+    color: red;
+    font-size: smaller;
+    margin-left: 0.0em;
+  }
+
+  .tooltip.tooltipclass20 .tooltip-inner {
+    color: #880000;
+    text-align: left;
+    width: 20em;
+    background-color: #ffff66;
+    box-shadow: 0 6px 12px rgba(0,0,0,.175);
+  }
+  .tooltip.tooltipclass50 .tooltip-inner {
+    color: #880000;
+    text-align: left;
+    width: 50em;
+    background-color: #ffff66;
+    box-shadow: 0 6px 12px rgba(0,0,0,.175);
+  }
+</style>
+<h2>Create new Delphi Evaluation</h2>
+<p style="font-style: italic; color: #286090">Hover over the input fields for help. All fields are required</p>
+<br/>
+<div>
+  <div>
+    <form class="form-horizontal" role="form" name="f" novalidate>
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="description" >Description</label>
+        <div class="col-sm-8" >
+          <input type="text" class="form-control" id="description" placeholder="Enter Description" ng-model="evaluation.description" 
+                 name="description" required ng-minlength="4"
+                 uib-tooltip="This will be the title for the evaluation page"
+                 tooltip-class="tooltipclass20">
+        </div>
+        <div class="col-sm-2 err">
+          <span ng-show="f.description.$error.required">*</span>
+          <span ng-show="f.description.$error.minlength">Min-length is 4</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="class">Class</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" id="class" placeholder="Enter Class" ng-model="evaluation.class"
+                 name="class" required
+                 uib-tooltip="Enter the class name for the class to perform the evaluation with"
+                 tooltip-class="tooltipclass20">
+        </div>
+        <div class="col-sm-2 err">
+          <span ng-show="f.class.$error.required">*</span>                    
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="numberofquestions">Number of Questions</label>
+        <div class="col-sm-2">
+          <input type="number" class="form-control" id="numberofquestions" ng-model="evaluation.numberOfQuestions"
+                 name="numquestions" required min="1"
+                 uib-tooltip="The number of questions participants can fill out (positive and negative)"
+                 tooltip-placement="right"
+                 tooltip-class="tooltipclass20">
+        </div>
+        <div class="col-sm-2 err">
+          <span ng-show="f.numquestions.$error.required">*</span>     
+          <span ng-show="f.numquestions.$error.min">At least one question is required</span>                    
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="numberofparticipants">Number of Participants</label>
+        <div class="col-sm-2">
+          <input type="number" class="form-control" id="numberofparticipants" ng-model="evaluation.numberOfParticipants"
+                 name="numparticipants" require     d min="2"
+                 uib-tooltip="The number of participants that can participate in the evaluation (a corresponding number of access codes will be generated)"
+                 tooltip-placement="right"
+                 tooltip-class="tooltipclass20">
+        </div>
+        <div class="col-sm-2 err">
+          <span ng-show="f.numparticipants.$error.required">*</span>     
+          <span ng-show="f.numparticipants.$error.min">At least two participants required</span>                    
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="textforok">Text for OK</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" id="textforok" placeholder="Enter text for OK" ng-model="evaluation.textPlus"
+                 name="textforok" required
+                 uib-tooltip='The header for the plus comments.   Example: "Write three things you find is OK with COURSE_NAME" (the number three, should match the value given in Number of Questions))'
+                 tooltip-class="tooltipclass50">
+        </div>
+        <div class="col-sm-2 err">
+          <span ng-show="f.textforok.$error.required">*</span>                    
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="textfornotok">Text for Not OK</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" id="textfornotok" placeholder="Enter text for Not OK" ng-model="evaluation.textMinus"
+                 name="textfornotok" required
+                 uib-tooltip='The header for the Negative comments. Example: "Write three things you find is NOT OK with COURSE_NAME" (the number three, should match the value given in Number of Questions))'
+                 tooltip-class="tooltipclass50">
+        </div>
+        <div class="col-sm-2 err">
+          <span ng-show="f.textfornotok.$error.required">*</span>                    
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <button type="submit" class="btn btn-success" ng-click="submit()" ng-disabled="f.$invalid">Submit</button>
+          <button type="submit" class="btn btn-warning" ng-click="clear()">Clear</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div ng-show="submitted">
+    <h3>URL and Codes for this evaluation</h3>
+    <hr/>
+    <p>URL: &nbsp;<code> {{url}} </code> <span style="font-size: 0.9em;font-style: italic;color: darkgreen">(Provide all persons participating with this URL + a code)</span>
+    </p>
+    <p>Open: &nbsp;<code> {{idOpen}} </code> <span style="font-size: 0.9em;font-style: italic;color: darkgreen">(Use this URL to open the evaluation (keep it secret))</span>
+    </p>
+    <p>Close: &nbsp;<code> {{idClose}} </code> <span style="font-size: 0.9em;font-style: italic;color: darkgreen">(Use this URL to close the evaluation (keep it secret))</span>
+    </p>
+    <p>Results:&nbsp;<code> {{idResult}} </code> <span style="font-size: 0.9em;font-style: italic;color: darkgreen">(Use this URL to get result (keep it, its the only way to go back))</span>
+    </p>
+    <hr/>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-1">
+          <h4>Codes:</h4>
+          <textarea cols="8" rows="9">{{codesStr}}</textarea>
+        </div>
+        <div class="col-md-8" >
+          <h4>Text for student handouts</h4>
+          <div class="row">
+            <div class="col-md-7">
+              <div style="width: 100%">
+                <textarea style="float:left;width:100%;" rows="1" ng-model="text1" ></textarea>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <span style="float:left">{{url}}</span>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-7">
+              <div style="width: 100%">
+                <textarea style="float:left;width:100%;" rows="1" ng-model="text2"></textarea>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <span style="float:left">A Login Code</span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-9">
+              <div style="width: 100%">
+                <textarea style="float:left;width:100%;" rows="6" ng-model="text3" ng-trim="false"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2" style="-webkit-box-shadow: 2px 3px 5px 0px rgba(0,0,0,0.75);
+             -moz-box-shadow: 2px 3px 5px 0px rgba(0,0,0,0.75);
+             box-shadow: 2px 3px 5px 0px rgba(0,0,0,0.75);padding:6px;margin-top:1em;">
+          <p>Edit text in the text areas, or leave it unchanged if OK</p>
+          <p>Press <em>Make Handouts</em> to generate handout-text</p>
+          <p>You might need to scroll down, to see the text!</p>
+          <button class="btn btn-success" ng-click="makeHandOuts()">Make Handouts</button>
+          <br/>
+        </div>
+      </div>
+      <textarea style="width: 100%" rows="20" readonly
+                ng-model="handOutText";
+                placeholder="Press the Make Handouts Button to generate handout text for print">
+
+      </textarea>
+    </div>
+  </div
+
+
+</div>
+

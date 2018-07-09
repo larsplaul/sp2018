@@ -1,0 +1,26 @@
+body {
+  /*padding: 50px;*/
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  /*background-image: url('../images/cph-1.png');*/
+  /*background-repeat: no-repeat;*/
+  /*background-size: 100%;*/
+  /*background-color: #ffffff;*/
+  /*background-color:#E5E5EE;*/
+}
+
+.navbar-static-top {
+  margin-bottom: 19px;
+}
+body {
+  min-height: 2000px;
+  /*padding-top: 40px;*/
+}
+
+a {
+  color: #00B7FF;
+}
+
+.grid {
+  width: 500px;
+  height: 400px;
+}

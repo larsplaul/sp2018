@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html ng-app="myAppRename" >
+  <head>
+    <meta charset="utf-8"/>
+    <title>StudyPoint-Handler</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="stylesheets/style.css"/>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+    <script src="bower_components/angular-jwt/dist/angular-jwt.js"></script>        
+    <script src="app/app.js"></script>
+    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.14.3.js"></script>
+
+  </head>
+  <body>
+
+    <div ng-controller="AppLoginCtrl" ng-style="debugStatus" >
+      <nav class="navbar navbar-static-top  navbar-default" role="navigation" >
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"  >
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#/view1"><img src="images/logo-top.png"  style="margin-top:-8px;width:200px;"></a>
+          </div>
+          <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+              <li ng-class="{ active: isActive('/view1')}"><a  id="home" href="#/view1">Home</a></li>
+              <li ng-class="{ active: isActive('/news')}"><a  id="news" href="#/news" ng-hide="isAdmin" >Get the App</a></li>
+              <li ng-class="{ active: isActive('/view_studentDetail')}"><a href="#/view_studentDetail" ng-cloak ng-show="isUser" >My Study-points</a></li>
+              <li ng-class="{ active: isActive('/view_admin_home')}"><a href="#/view_admin_home" ng-cloak ng-show="isSuper">Users</a></li>
+              <li ng-class="{ active: isActive('/view_admin_studypoints')}"><a href="#/view_admin_studypoints" ng-cloak ng-show="isAdmin" >Study Points</a></li>
+              <li ng-class="{ active: isActive('/view_admin_classInfo')}"><a href="#/view_admin_classInfo" ng-cloak ng-show="isAdmin" >Info for Class</a></li>
+              <li ng-class="{ active: isActive('/view_admin_editClass')}"><a href="#/view_admin_editClass" ng-cloak ng-show="isSuper" >Edit Class</a></li>
+              <li ng-class="{ active: isActive('/view_admin_script')}"><a href="#/view_admin_script" ng-cloak ng-show="isSuper" >Script Handling</a></li>
+<!--              <li ng-class="{ active: isActive('/view_admin_delphi')}"><a href="#/view_admin_delphi" ng-cloak ng-show="isAdmin" >Delphi Evaluation</a></li>-->
+              <li ng-show="isAdmin">  <div class="dropdown navbar-text navbar-right" role="form">
+                <div  data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                   Utils
+                  <span class="caret"></span>
+                </div>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                  <li><a href="#/view_admin_delphi" ng-show="isAdmin">Delphi Evaluation</a></li>
+                  <li><a href="#/view_admin_utils" ng-cloak ng-show="isAdmin" >Check Class Name</a></li>
+                </ul>
+              </div></li>
+            </ul>
+            <form class="navbar-form navbar-right" role="form" ng-cloak ng-show="!isAuthenticated" ng-submit="login()">
+              <img src="images/spinnerSmalle.gif" ng-show="showLogonSpinner">
+              <div class="form-group">
+                <input type="text" style="width:10em;" placeholder="User name" class="form-control" ng-model="user.username">
+              </div>
+              <div class="form-group">
+                <input type="password" style="width:10em;" placeholder="Password" class="form-control" ng-model="user.password">
+              </div>
+              <button type="submit" class="btn btn-success">Sign in</button>
+              <!--                            <div class="form-group"  tooltip-placement="bottom" 
+                                               uib-tooltip="Your password will be used to authenticate up against Fronter, but will NOT be saved on our server">
+                                              <input type="checkbox"  class="small" id="useFronter" ng-model="user.useFronter" ng-click="useFronterClicked()">
+                                              <br/>
+                                              <label for="useFronter" style="font-size: x-small;font-weight: normal">With Fronter</label>
+                                          </div>-->
+              <div class="form-group" style="width: 8em;">
+                <a href="#" style="font-size: smaller;" ng-click="resetPassword()">Forgot your password?</a>
+              </div>
+            </form>
+
+            <div class="navbar-right"  ng-cloak ng-show="isAuthenticated">
+
+              <div class="dropdown navbar-text">
+                <div  data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                  <span class="glyphicon glyphicon-user" aria-hidden="true"></span> &nbsp; {{username}}
+                  <span class="caret"></span>
+                </div>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                  <li><a href="#/view_all_userDetails" ng-show="isAdmin || isUser">My Account</a></li>
+                  <li><a href="#home" ng-cloak  ng-click="logout()">Logoff</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <div class="container" >
+        <div class="alert alert-warning" role="alert" ng-show="error"  ng-cloak style="margin: 1.5em;" >
+          <div> {{error.message}} <span>{{error.description}}</span></div>
+        </div>
+        <div ng-view="ng-view"></div>
+        <div style="color:red;font-weight: bold;margin-top: 0px;">{{debugStatusTxt}}</div>
+      </div>
+    </div>
+
+
+    <script type="text/ng-template" id="errorModal.html">
+      <div class="modal-header">
+      <h3 class="modal-title">Error!</h3>
+      </div>
+      <div class="modal-body">
+      <p>{{error}}</p>
+      </div>
+      <div class="modal-footer">
+      <button class="btn btn-primary" type="button" ng-click="ok()" autofocus>OK</button>
+      </div>
+    </script>
+
+
+    <script type="text/ng-template" id="forgotpasdword.html">   
+    <div class="modal-header">
+      <h3 class="modal-title">Forgot your password?!</h3>
+    </div>
+    <div class="modal-body">
+      <div ng-show="!mailSent">
+      <img style="position: absolute; top: 25px;left: 100px;" src="images/spinner128.gif" ng-show="showWaitSpinner" >
+      <p>Please enter the email address for your account. Unless you have changed it, it will be your cphbusiness.dk email.</p>
+      <p>A verification link and code will be sent, <em>valid for only 20 minuttes</em>. Use the code and provided link to choose a new password for you account</p>
+      <br/>
+      
+      <form role="form" name="f" novalidate> 
+        
+        <div class="form-group">
+          <label class="control-label col-sm-1" for="email">Email</label>
+          <div class="col-sm-8">
+            <input type="email" class="form-control" id="email" placeholder="Enter email" ng-model="resetpassword"
+                   name="email" required>
+          </div>
+          <div class="col-sm-2 err" style="color: red; font-size:small">
+            <span ng-show="f.email.$error.required">*</span>                    
+            <span ng-show="f.email.$error.email"> Not a valid email!</span>
+          </div>
+        </div>
+      </form>
+      </div>
+      <div ng-show="mailSent">
+      <br/>
+      <p> A mail was sent with a one time password you should use to reset your password.</p>
+      <p>Note: This password is only valid for 15. minutes </p>
+      </div>
+    </div>
+    <div class="modal-footer" style="margin-top:3em;">
+      <button class="btn btn-primary" type="button" ng-click="submit()" ng-show="!mailSent" ng-disabled="f.$invalid">Reset Password</button>
+      <button class="btn btn-primary" type="button" ng-click="ok()" ng-show="mailSent">OK</button>
+      <button class="btn btn-warning" type="button" ng-click="cancel()" ng-show="!mailSent">Cancel</button> 
+    </div>
+    </script>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!--<script>-->
+    <!--$(document).ready(function(){-->
+    <!--$(".nav a").on("click", function(){-->
+    <!--$(".nav").find(".active").removeClass("active");-->
+    <!--$(this).parent().addClass("active");-->
+    <!--});-->
+    <!--});-->
+
+    <!--</script>-->
+
+    <!--<script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.12.0.js"></script>-->
+    <!--    <script src="js/ui-bootstrap-tpls-0.13.3.min.js"></script>-->
+
+
+    <!-- Both files below are needed for dropdown-->
+    <script src="bower_components/lodash/dist/lodash.min.js"></script>
+    <script src="bower_components/angularjs-dropdown-multiselect/dist/angularjs-dropdown-multiselect.min.js"></script>
+
+    <!--pagignation control to show all users -->
+    <script src="bower_components/angular-utils-pagination/dirPagination.js"></script>
+
+
+
+    <script src="app/viewPublic/viewPublic.js"></script>
+    <script src="app/viewPublic/news/news.js"></script>
+    <script src="app/viewsUser/viewHome/home.js"></script>
+    <script src="app/viewsAdmin/viewHome/home.js"></script>
+    <script src="app/viewsAdmin/viewStudyPoint/studypoint.js"></script>
+    <script src="app/viewsAdmin/viewStudentsStudyPoint/studentStudyPoint.js"></script>
+    <script src="app/viewsAdmin/viewEditClasses/classEdit.js"></script>
+    <script src="app/viewsAdmin/viewClassInfo/classInfo.js"></script>
+    <script src="app/viewsAdmin/viewScripts/scripts.js"></script>
+    <script src="app/viewsAdmin/viewDelphi/delphi.js"></script>
+    <script src="app/viewsAdmin/viewUtils/utils.js"></script>
+    <script src="app/viewsAll/viewUsersDetails.js"></script>
+    <script src="app/components/controllers.js"></script>
+    <script src="app/components/auth.js"></script>
+    <script src="app/components/directives.js"></script>
+    <script src="app/components/factories.js"></script>
+    <script src="app/components/constants.js"></script>
+    <!--<script src="app/components/services.js"></script>-->
+    <script src="app/components/filters.js"></script>
+  </body>
+</html>

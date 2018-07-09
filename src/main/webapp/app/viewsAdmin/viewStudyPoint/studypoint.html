@@ -1,0 +1,161 @@
+<!--<style>-->
+<!--body {-->
+<!--background-image: url('../../../images/cph-2.png');-->
+<!--}-->
+<!--</style>-->
+<style>
+  input.ng-invalid {
+    background: red;
+  }
+
+  .alert-block {
+    margin-top:35px;
+    padding-top: 0.3em;
+    padding-bottom: 0.3em;
+  }
+</style>
+
+<div style="width: 100%; display:inline-block; height: 100vh;padding: 10px;">
+  <div class="alert alert-danger" role="alert" ng-show="error" style="margin: 1em;">{{error}}</div>
+
+  <script type="text/ng-template" id="DirtyForm.html">
+    <div class="modal-header">
+    <h3 class="modal-title">Unsaved changes on current period!</h3>
+    </div>
+    <div class="modal-body" style="height: 10em;">
+    There are unsaved changes on the current period.
+    </div>
+    <div class="modal-footer">
+    <button class="btn btn-primary" ng-click="saveChanges()">Save</button>
+    <button class="btn btn-warning" ng-click="continueAndDrop()">Drop Changes</button>
+    </div>
+  </script>
+
+
+  <script type="text/ng-template" id="showCode.html">
+    <div class="modal-header">
+    <h3 class="modal-title">Code for registering attendance</h3>
+    </div>
+    <div class="modal-body" style="height: 40em;">
+    <div style="font-size: 96px;font-weight:bold;color:darkgreen;text-align:center">
+     <br/>
+     <div>{{code}}</div>
+       </div>
+       <br/>
+       <hr/>
+       <br/>
+     <div style="font-size:28px;color:darkgren;margin:15px; text-allign:left;">
+     Login to: {{url}}, select this class ({{thisclass}}) and period ({{period}}) and enter the <b>code</b> above.
+           </div>  
+    
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" ng-click="saveChanges()">Close</button>
+    </div>
+  </script>
+
+  <div class="form-group" >
+    <div style="max-width: 25em;">
+      <select ng-model="selectedId"
+              ng-options="class._id as class.nameShort +    ' (' +    class._id +   ')' for class in classes"
+              ng-change="getClass(selectedId)" id="class" class="form-control">
+        <option value='' disabled selected style='display:none;'>Select class</option>
+      </select>
+    </div>
+  </div>
+
+  <div style="clear:both">&nbsp;</div>
+
+  <div class="btn-group" style="float: left">
+    <button ng-repeat="period in selectedClass.periods" style="min-width: 10em;" type="button" class="btn btn-default btn-sm"
+            ng-click="showPeriod(period._id)">
+      {{period.periodName}}
+    </button>
+  </div>
+
+  <div style="clear:both">&nbsp;</div>
+
+  <div ng-show="loading" style="margin-top: 4em;">
+    <img style="margin-left:auto; margin-right:auto; width:8em;display: block;" src="images/spinner128.gif" alt="loading Data">
+  </div>
+  <div ng-show="saving" style="margin-top: 4em;">
+    <img style="margin-left:auto; margin-right:auto; display: block;" src="images/saving.gif" alt="Saving Data">
+  </div>
+
+  <div collapse="!period" style="width: 100%;max-height: 70vh; overflow: auto"> <!-vh Vertical Height -->
+    <div class="row">
+      <div class="col-md-5" style="font-size: large; align-content: center">{{period.periodName}}, {{period.periodDescription}}</div>
+
+      <div class="col-md-3">
+        <input type="search" ng-model="filteredTasks" class="form-control input-sm" style="width: 20em;" placeholder="Select task">
+      </div>
+      <div class="col-md-2">
+        <label for="like" style="margin-right: 4px;color: darkgray">Like Match</label>  
+        <input style="margin-top: 5px;" type="checkbox" id="like" ng-model="likeMatch"> 
+      </div>
+    </div>
+
+    <form  name="studyPointForm"  style="max-width: 40%;">
+      <div >
+        <table class="table" style="font-size: smaller" fixed-header>
+          <thead>
+            <tr>
+              <th>
+                <div style="width: 12em;display: inline-block">Student
+                  <a href="" ng-click="predicate = 'fullName';
+                    reverse = !reverse"><span class="glyphicon glyphicon-sort"
+                          aria-hidden="true"></span></a>
+                </div>
+              </th>
+              <th>
+                <div style="width: 4em;display: inline-block">Sum
+                  <a ng-click="predicate = 'sumOfAllPoints';
+                    reverse = !reverse">
+                    <span class="glyphicon glyphicon-sort" aria-hidden="true"></span>
+                  </a>
+                </div>
+              </th>
+              <th ng-repeat="task in period.tasks| filterTasks:{tasks: period.tasks, filterText: filteredTasks,header: true,likeMatch: likeMatch}">
+               
+                <div style="text-align: center;"><a ng-if='task.id' href="" ng-click="getCode(task.id)" > 
+                      <span class="glyphicon glyphicon-text-background"></span></a>
+                </div>
+               <span >{{task.name}}</span>
+               
+                <span style="font-size: xx-small;color: #5f9ea0">(max:{{task.maxScore}})</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <!--<tr ng-repeat="student in period.students">-->
+            <tr ng-repeat="student in period.students| orderBy:predicate:reverse">
+<!--              <th><a href="#/viewAdmin_studentDetail/{{student.userId}}/{{student.fullName}}">{{student.fullName}}</a></th>-->
+              <th><a href="#/viewAdmin_studentDetail/{{student.userId}}/{{student.fullName}}/{{selectedClass._id}}/{{period.periodName}}">{{student.fullName}}</a></th>
+              <th style="color: #5f9ea0">{{student| sumOfAllPoints | orderBy:sumOfAllPoints:reverse}}</th>
+              <th ng-repeat="s in student.scores| filterTasks:{tasks: period.tasks, filterText: filteredTasks,header: false,likeMatch: likeMatch}">
+                <input type="number" min="0" max="{{s.maxScore}}"
+                       style="width: 3em;border:1px solid lightgray; border-radius: 2px;"
+                       ng-model="s.score"
+                       tabindex="{{calculateTabIndex($parent.$index + $index * rows)}}">
+                <!--<span style="font-size: xx-small">{{s.maxScore}}</span>-->
+              </th>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </form>
+  </div>
+  <div>
+    <button ng-click="savePeriod()" ng-disabled="studyPointForm.$invalid || studyPointForm.$pristine" ng-show="period" class="btn btn-success"
+            style="margin-top: 0.5em;">Save
+    </button>
+    <span style="max-width:  1em;margin-left: 2em;" class="alert alert-danger alert-block" role="alert" ng-show="!studyPointForm.$valid"  ng-cloak >
+      Correct invalid fields before saving
+    </span>
+    <span style="max-width:  1em;margin-top: 2em;"  class="alert alert-success alert-block" role="alert" ng-show="safeStatus"  ng-cloak style="margin: 1em;">
+      {{safeStatus}}
+    </span>
+  </div>
+</div>
+

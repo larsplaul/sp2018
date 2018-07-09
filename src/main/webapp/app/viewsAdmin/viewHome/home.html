@@ -1,0 +1,176 @@
+<div ng-show="!dataReady" style="margin-top: 4em;">
+   <img style="margin-left:auto; margin-right:auto; display: block;" src="images/spinner128.gif" alt="loading Data">
+</div>
+<div ng-show="dataReady">
+  <div style="margin-top: 2em;">
+    <label for="search">Search:</label><input ng-model="searchText" ng-change="resetEditWindow()" type="search"  id="search" >
+    <!--<label style="margin-left: 1em;" for="roleFilter">Students Only</label><input style="margin-left: 1em;" ng-model="studentsOnly" type="checkbox"  id="roleFilter">-->
+    <input style="margin-left: 1em;" ng-model="roleToShow" type="radio" value="User" ng-change="resetEditWindow()" >User
+    <input style="margin-left: 1em;" ng-model="roleToShow" type="radio" value="Admin" ng-change="resetEditWindow()">Teacher
+  </div>
+  <div class="row">
+    <div class="table-responsive col-md-8" style="height: 29em;">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>User</th>
+            <th>Name</th>
+            <th>Role</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!--<tr ng-repeat="user in usersToShow | orderBy:'user'">-->
+          <tr dir-paginate="user in users| filter: searchText |filter : roleToShow=='User' ? {role : 'User'}: {role : 'Admin'} | orderBy:'user' |itemsPerPage: 8 ">
+            <td class="col-md-2"> {{user.user}}</td>
+            <td class="col-md-4"> {{user.firstName}} {{user.lastName}}</td>
+            <td class="col-md-2"> {{user.role}}</td>
+            <td class="col-md-3">
+              <a class="btn btn-primary btn-xs"
+                 href="#/viewAdmin_studentDetail/{{user._id}}/{{user.firstName}} {{user.lastName}}">
+                <span class="glyphicon glyphicon-link" aria-hidden="true"></span></a>
+
+              <button class="btn btn-default btn-xs" ng-click="edit(user)"><span class="glyphicon glyphicon-pencil"
+                                                                                 aria-hidden="true"></span></button>
+              <button class="btn btn-danger btn-xs" ng-click="delete(user._id)"><span class="glyphicon glyphicon-remove"
+                                                                                      aria-hidden="true"></span></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+    <script type="text/ng-template" id="warningDelete.html">
+      <div class="modal-header">
+      <h3 class="modal-title">Delete {{deleteName}}!</h3>
+      </div>
+      <div class="modal-body" style="height: 7em;">
+      You are about to delete a person from the database
+      </div>
+      <div class="modal-footer">
+      <button class="btn btn-primary" ng-click="cancel()">Cancel</button>
+      <button class="btn btn-warning" ng-click="delete()">Delete</button>
+      </div>
+    </script>
+
+
+    <div class="table-responsive col-md-4" >
+      <div style="min-height: 25em;border: thin solid lightgray;padding: 0.5em;">
+
+        <form class="form form-horizontal" ng-show="isAdding">
+          <div>
+            <legend style="text-align: center">{{addEditHeading}}</legend>
+            <div class="form-group">
+              <label for="username" class="control-label col-xs-3"><span class="label label-info">User Name</span></label>
+
+              <div class="col-xs-9">
+                <input ng-model="newUser.user" class="form-control input-sm" id="username" placeholder="User name">
+              </div>
+            </div>
+
+
+            <div class="form-group">
+              <label for="class" class="control-label col-xs-3"><span class="label label-info">Classes</span></label>
+
+              <div class="col-xs-9">
+                <div  ng-dropdown-multiselect id="class"
+                      options="allclasses"
+                      selected-model="newUser.classes"
+                      extra-settings="multiSelectSettings"
+                      translation-texts="multiSelectText" ></div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="class" class="control-label col-xs-3">&nbsp;</label>
+
+              <div class="col-xs-9">
+                <div style="font-size: x-small"> <p>{{newUser.classes| showClasses}}</p></div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="fname" class="control-label col-xs-3"><span class="label label-info">First Name</span></label>
+
+              <div class="col-xs-9">
+                <input ng-model="newUser.firstName" class="form-control input-sm" id="fname" placeholder="First Name">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="lname" class="control-label col-xs-3"><span class="label label-info">Last Name</span></label>
+
+              <div class="col-xs-9">
+                <input ng-model="newUser.lastName" class="form-control input-sm" id="lname" placeholder="Last Name">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="email" class="control-label col-xs-3"><span class="label label-info">Email</span></label>
+
+              <div class="col-xs-9">
+                <input ng-model="newUser.email" class="form-control input-sm" id="email" placeholder="Email">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="phone" class="control-label col-xs-3"><span class="label label-info">Phone</span></label>
+
+              <div class="col-xs-9">
+                <input ng-model="newUser.phone" class="form-control input-sm" id="phone" placeholder="Phone (mobile)">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="role" class="control-label col-xs-3"><span class="label label-info">Role</span></label>
+
+              <div class="col-xs-9">
+                <select ng-model="newUser.role" class="form-control input-sm" id="role">
+                  <option value="User" selected="selected">Student</option>
+                  <option value="Admin">Teacher</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-xs-3">&nbsp;</div>
+
+              <div class="col-xs-12">
+                <button class="btn btn-success" ng-click="saveUser()">Save</button>
+                <button class="btn btn-default" ng-click="cancel()">Cancel</button>
+                <button class="btn btn-default" ng-click="resetPassword()" ng-show="isEditing">Reset Password</button>
+
+              </div>
+            </div>
+          </div>
+          <div ng-show="isEditing" class="alert alert-warning" role="alert">Resetting the password will set it to the original password
+          </div>
+          <div ng-show="!isEditing" class="alert alert-warning" role="alert">New users wil get the userName as initial password (they should change it imediately)
+
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <hr/>
+  <div class="row">
+    <div class="col-md-8">
+      <!--    <pagination boundary-links="true" max-size="3" direction-links="false" items-per-page="itemsPerPage"
+                      total-items="users.length"
+                      ng-model="currentPage"
+                      ng-change="getUsersToShow()"
+                      style="margin-top: 0px;"></pagination>
+      
+        </div>-->
+
+      <dir-pagination-controls></dir-pagination-controls>
+      <div class="col-md-4">
+        <button class="btn btn-primary" ng-click="showAddUser()">Add User</button>
+      </div>
+    </div>
+  </div>
+</div>
+  <div class="alert alert-danger" role="alert" ng-show="error" style="margin: 1em;">{{error.message}}
+    <div>{{error.description}}</div>
+  </div>

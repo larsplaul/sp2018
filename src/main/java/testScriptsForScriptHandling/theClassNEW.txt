@@ -1,0 +1,28 @@
+_class_and_students_
+_friendlyname_;FullStackJS_F2017
+_maxpoints_required_;100;80
+FullName;Email;Activity;Username;CPR;PrivatMail
+Asger Thorsboe Lundblad;cph-al217@cphbusiness.dk;CPH-l17dat4ja1e;cph-al217;-;regsa13@gmial.com
+Bjørn Forsberg Feldt Kristiansen;cph-bk110@cphbusiness.dk;CPH-l17dat4ja1e;cph-bk110;-;bearukun@gmail.com
+Christian Engelberth Olsen;cph-co108@cphbusiness.dk;CPH-l17dat4ja1e;cph-co108;-;ceo_titanic@msn.com
+Christian Øst-Jacobsen;cph-co109@cphbusiness.dk;CPH-l17dat4ja1e;cph-co109;-;coej94@hotmail.com
+Christopher Poul Rosendorf;cph-cr169@cphbusiness.dk;CPH-l17dat4ja1e;cph-cr169;-;Chris@Rosendorf.dk
+Daniel Nadelmann;cph-dn72@cphbusiness.dk;CPH-l17dat4ja1e;cph-dn72;-;fetahond@gmail.com
+Hannibal Alexander Skriver;cph-hs160@cphbusiness.dk;CPH-l17dat4ja1e;cph-hs160;-;hanni.skriver@gmail.com
+Jamie Kjærgaard Egeberg;cph-je95@cphbusiness.dk;CPH-l17dat4ja1e;cph-je95;-;jamie_egeberg@hotmail.com
+Jonas Schack Nielsen;cph-jn235@cphbusiness.dk;CPH-l17dat4ja1e;cph-jn235;-;jonas.schack.nielsen@gmail.com
+Jonas Schelde;cph-js280@cphbusiness.dk;CPH-l17dat4ja1e;cph-js280;-;jspe@proitsupport.dk
+Jonathan Henriksen;cph-jh277@cphbusiness.dk;CPH-l17dat4ja1e;cph-jh277;-;fluttershy1337@hotmail.com
+Mahnaz Karimi;cph-mk406@cphbusiness.dk;CPH-l17dat4ja1e;cph-mk406;-;mahnaazi@yahoo.com
+Martin Kirk;cph-mk398@cphbusiness.dk;CPH-l17dat4ja1e;cph-mk398;-;kirkovic@gmail.com
+Michael Larsen;cph-ml413@cphbusiness.dk;CPH-l17dat4ja1e;cph-ml413;-;miclar.deity@gmail.com
+Nicklas Andreasen Molving;cph-nm106@cphbusiness.dk;CPH-l17dat4ja1e;cph-nm106;-;nicklasmolving@gmail.com
+Nicolai Rosenkrands Mikkelsen;cph-nm107@cphbusiness.dk;CPH-l17dat4ja1e;cph-nm107;-;n_r_mikkelsen@hotmail.com
+Niki Wix Skaarup;cph-ns117@cphbusiness.dk;CPH-l17dat4ja1e;cph-ns117;-;Nikiskaarup@hotmail.com
+Peter Boss Thomsen;cph-pt75@cphbusiness.dk;CPH-l17dat4ja1e;cph-pt75;-;peter2137@gmail.com
+Poul Nikolaj Jørgensen;cph-pj148@cphbusiness.dk;CPH-l17dat4ja1e;cph-pj148;-;lod2aef@outlook.dk
+Thomas Staal;cph-ts183@cphbusiness.dk;CPH-l17dat4ja1e;cph-ts183;-;staalthomas1@gmail.com
+Viktor Kim Christiansen;cph-vc33@cphbusiness.dk;CPH-l17dat4ja1e;cph-vc33;-;viktorkim2005@hotmail.com
+William Pfaffe;cph-wp68@cphbusiness.dk;CPH-l17dat4ja1e;cph-wp68;-;william.pfaffe@gmail.com
+Yousef Aqil Mohsen;cph-ym15@cphbusiness.dk;CPH-l17dat4ja1e;cph-ym15;-;encantairaq7@live.dk
+Zaeem Shafiq Rafique;cph-zr16@cphbusiness.dk;CPH-l17dat4ja1e;cph-zr16;-;zaeem1996@hotmail.com

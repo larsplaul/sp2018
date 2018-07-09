@@ -1,0 +1,22 @@
+
+<div>
+    <div class="row">
+        <div class="col-md-4">
+        <input type="file" ng-file-select="onFileSelect($files)" class="btn-default btn" >  
+        </div>
+        <div class="col-md-2">
+            <button ng-click="sendScript()" class="btn-success btn" ng-disabled="script == null || script ==''">Submit Script</button>
+        </div>
+
+    </div>   
+    <br/>
+    <form role="form">
+        <img style="position: absolute; top: 200px;left: 400px;" src="images/spinner128.gif" ng-show="showSpinner" >
+    <div class="form-group">
+      <label for="comment">Check script and submit it:</label>
+      <textarea class="form-control" rows="18" id="comment" ng-model="script" ng-disabled="showSpinner"></textarea>
+    </div>
+        
+  </form>
+            <div>Last Error: {{status}}</div>
+</div>
